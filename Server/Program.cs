@@ -1,7 +1,10 @@
 global using _3Ecommerce.Shared;
-using _3Ecommerce.Server.DAL;
+global using _3Ecommerce.Server.Services.ProductService;
+global using _3Ecommerce.Server.Services.CategoriesServices;
+global using _3Ecommerce.Server.DAL;
+global using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
@@ -12,6 +15,9 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddDbContext<Contexto>(options => options.UseSqlite(ConStr));
 

@@ -16,10 +16,46 @@ namespace _3Ecommerce.Server.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
 
+            modelBuilder.Entity("_3Ecommerce.Shared.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("url")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Cars",
+                            url = "cars"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Trucks",
+                            url = "trucks"
+                        });
+                });
+
             modelBuilder.Entity("_3Ecommerce.Shared.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -39,12 +75,15 @@ namespace _3Ecommerce.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Product");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Description = "V8 huge dodge car, Cesar´s fav",
                             ImageUrl = "https://ag-spots-2021.o.auroraobjects.eu/2021/07/04/dodge-charger-srt-hellcat-widebody-c883704072021053710_5.jpg?1625369847",
                             Price = 890000.99m,
@@ -53,6 +92,7 @@ namespace _3Ecommerce.Server.Migrations
                         new
                         {
                             Id = 2,
+                            CategoryId = 1,
                             Description = "V10 Wide Agressive car, Like a Vin Diesel actor Fav car",
                             ImageUrl = "https://ag-spots-2021.o.auroraobjects.eu/2021/03/03/dodge-challenger-srt-hellcat-widebody-2019-c277503032021013737_3.jpg",
                             Price = 57000.99m,
@@ -61,11 +101,23 @@ namespace _3Ecommerce.Server.Migrations
                         new
                         {
                             Id = 3,
+                            CategoryId = 2,
                             Description = " T-Rex that eating RAPTORS becomes a truck, our Daddy´s Really like this",
                             ImageUrl = "https://lifestyleautogroup.ca/wp-content/uploads/2022/04/TRX-03-scaled.jpg",
                             Price = 120000.99m,
                             Title = "2022 Dodge RAM TRX"
                         });
+                });
+
+            modelBuilder.Entity("_3Ecommerce.Shared.Product", b =>
+                {
+                    b.HasOne("_3Ecommerce.Shared.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

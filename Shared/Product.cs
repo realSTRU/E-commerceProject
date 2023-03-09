@@ -22,6 +22,10 @@ namespace _3Ecommerce.Shared
 
         public decimal Price { get; set; }
 
+        public Category? Category { get; set; }
+
+        public int CategoryId { get; set; }
+
 
 
     }

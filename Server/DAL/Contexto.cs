@@ -8,13 +8,38 @@ namespace _3Ecommerce.Server.DAL
     {
         public DbSet<Product> Product { get; set; }
 
+        public DbSet<Category> Category { get; set; }
+
         public Contexto(DbContextOptions<Contexto> options) : base(options)
         {
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-        
+
+            modelBuilder.Entity<Category>().HasData(
+
+                    new Category
+                    {
+                        Id = 1,
+                        Name = "Cars",
+                        url= "cars"
+                    },
+
+                    new Category
+                    {
+                        Id = 2,
+                        Name = "Trucks",
+                        url ="trucks"
+                    }
+
+
+
+
+                );
+            ;
+
+
             modelBuilder.Entity<Product>().HasData(
                     new Product
                     {
@@ -22,7 +47,8 @@ namespace _3Ecommerce.Server.DAL
                         Title = "Dodge Charger SRT HellCat WideBody 2021",
                         Description = "V8 huge dodge car, Cesar´s fav",
                         ImageUrl = "https://ag-spots-2021.o.auroraobjects.eu/2021/07/04/dodge-charger-srt-hellcat-widebody-c883704072021053710_5.jpg?1625369847",
-                        Price = 890000.99m
+                        Price = 890000.99m,
+                        CategoryId = 1
 
                     },
 
@@ -33,6 +59,7 @@ namespace _3Ecommerce.Server.DAL
                         Description = "V10 Wide Agressive car, Like a Vin Diesel actor Fav car",
                         ImageUrl = "https://ag-spots-2021.o.auroraobjects.eu/2021/03/03/dodge-challenger-srt-hellcat-widebody-2019-c277503032021013737_3.jpg",
                         Price = 57000.99m,
+                        CategoryId = 1
                     },
 
                     new Product
@@ -42,7 +69,8 @@ namespace _3Ecommerce.Server.DAL
                         Description = " T-Rex that eating RAPTORS becomes a truck, our Daddy´s Really like this",
                         ImageUrl = "https://lifestyleautogroup.ca/wp-content/uploads/2022/04/TRX-03-scaled.jpg",
                         Price = 120000.99m,
-                    });
+                        CategoryId = 2
+                    }); ;
         }
     }
 }
